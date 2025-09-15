@@ -1,0 +1,104 @@
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex; /* For sticky footer */
+    flex-direction: column; /* For sticky footer */
+    min-height: 100vh; /* For sticky footer */
+}
+
+.hero-section {
+    /* Palabras clave que podrían dar fondos más oscuros o contrastantes */
+    background-image: url('https://source.unsplash.com/1920x1080/?dark,mountain,adventure,night,cityscape');
+    background-color: #333; /* Añade un color de fondo oscuro como fallback */
+    background-size: cover;
+    background-position: center center; /* Asegúrate de centrarla bien */
+    background-repeat: no-repeat;
+    color: white;
+    padding: 100px 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+.section {
+    padding: 60px 0;
+    display: none; /* Ocultar todas las secciones por defecto */
+}
+
+.section.active {
+    display: block; /* Mostrar la sección activa */
+}
+
+.benefit-icon, .feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #0d6efd; /* Bootstrap primary color */
+}
+
+.route-card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.route-card .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#mapDetail {
+    height: 400px;
+    width: 100%;
+    border-radius: 0.375rem; /* Bootstrap's default border-radius */
+    border: 1px solid #dee2e6; /* Bootstrap's default border color */
+}
+
+.profile-header {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.profile-header img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.achievement-icon {
+    font-size: 3rem;
+    color: #ffc107; /* Bootstrap warning color */
+}
+.achievement-icon.locked {
+    color: #adb5bd; /* Bootstrap secondary color for locked state */
+    opacity: 0.6;
+}
+
+
+.community-post img.card-img-top { /* Específico para la imagen del post */
+    max-height: 500px; /* Evita que las imágenes sean demasiado altas */
+    object-fit: cover;
+    border-radius: 0; /* Quitar borde redondeado si el card-header lo tiene */
+}
+
+.community-post .card-header img { /* Avatar en el header del post */
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+
+/* Asegurar que el footer quede abajo */
+main {
+    flex: 1;
+}
+
+/* Pequeños ajustes para la navbar en móvil */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background-color: #343a40; /* Mismo color que la navbar para mejor estética */
+        padding: 10px;
+        border-radius: 0 0 .25rem .25rem;
+    }
+}
+

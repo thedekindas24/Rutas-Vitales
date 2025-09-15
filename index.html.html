@@ -1,0 +1,698 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RutasVitales: Descubre, Muévete, Conecta</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Leaflet CSS (para mapas) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="Rutas.css">
+</head>
+<body>
+
+    <!-- NAVEGACIÓN PRINCIPAL -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="showPage('landing-page')">RutasVitales</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showPage('landing-page')">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showPage('explore-routes')">Explorar Rutas</a>
+                    </li>
+                    <li class="nav-item d-none" id="nav-profile">
+                        <a class="nav-link" href="#" onclick="showPage('user-profile')">Mi Perfil</a>
+                    </li>
+                    <li class="nav-item d-none" id="nav-challenges">
+                        <a class="nav-link" href="#" onclick="showPage('challenges-rewards')">Desafíos</a>
+                    </li>
+                    <li class="nav-item d-none" id="nav-community">
+                        <a class="nav-link" href="#" onclick="showPage('community-feed')">Comunidad</a>
+                    </li>
+                    <li class="nav-item" id="nav-login">
+                        <a class="nav-link" href="#" onclick="showPage('login-page')">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item" id="nav-register">
+                        <a class="nav-link btn btn-primary btn-sm text-white" href="#" onclick="showPage('register-page')">Regístrate</a>
+                    </li>
+                    <li class="nav-item d-none" id="nav-logout">
+                        <a class="nav-link" href="#" onclick="logoutUser()">Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- I. PÁGINA DE INICIO (LANDING PAGE) -->
+    <div id="landing-page" class="section active">
+        <!-- Hero Section -->
+        <header class="hero-section text-center">
+            <div class="container">
+                <h1 class="display-3 fw-bold">RutasVitales: Descubre, Muévete, Conecta.</h1>
+                <p class="lead fs-4">Tu aventura personalizada para explorar el mundo mientras te pones en forma.</p>
+                <div class="mt-4">
+                    <button class="btn btn-primary btn-lg me-2" onclick="showPage('register-page')">Regístrate Gratis</button>
+                    <button class="btn btn-outline-light btn-lg" onclick="showPage('explore-routes')">Descubre Rutas</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Breve Descripción de Beneficios -->
+        <section class="py-5">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <i class="fas fa-map-marked-alt benefit-icon"></i>
+                        <h4>Explora como un local</h4>
+                        <p>Descubre gemas ocultas y rutas escénicas.</p>
+                    </div>
+                    <div class="col-md-3">
+                        <i class="fas fa-running benefit-icon"></i>
+                        <h4>Ponte en forma divirtiéndote</h4>
+                        <p>Combina turismo con ejercicio cardiovascular y de fuerza.</p>
+                    </div>
+                    <div class="col-md-3">
+                        <i class="fas fa-users benefit-icon"></i>
+                        <h4>Conecta con aventureros</h4>
+                        <p>Únete a una comunidad que comparte tu pasión.</p>
+                    </div>
+                    <div class="col-md-3">
+                        <i class="fas fa-trophy benefit-icon"></i>
+                        <h4>Gana recompensas</h4>
+                        <p>Completa desafíos y acumula puntos para premios.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Adelanto de Características Principales -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-5">Características Principales</h2>
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <i class="fas fa-route feature-icon"></i>
+                        <h5>Rutas Personalizadas</h5>
+                    </div>
+                    <div class="col-md-3">
+                        <i class="fas fa-chart-line feature-icon"></i>
+                        <h5>Seguimiento de Progreso</h5>
+                    </div>
+                    <div class="col-md-3">
+                        <i class="fas fa-comments feature-icon"></i>
+                        <h5>Comunidad Activa</h5>
+                    </div>
+                    <div class="col-md-3">
+                        <i class="fas fa-gift feature-icon"></i>
+                        <h5>Desafíos y Premios</h5>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonios -->
+        <section class="py-5">
+            <div class="container">
+                <h2 class="text-center mb-5">Lo que dicen nuestros usuarios</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">"¡Increíble! Descubrí rincones de mi ciudad que no conocía." - Ana P.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">"La gamificación me motiva a salir más. ¡Ya soy Explorador Plata!" - Carlos G.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">"Conecté con un grupo para hacer senderismo los fines de semana. ¡Genial!" - Laura M.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- II. REGISTRO Y CREACIÓN DE CUENTA -->
+    <div id="register-page" class="container section">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center mb-4">Crear Cuenta en RutaActiva</h2>
+                <form id="registerForm">
+                    <div class="mb-3">
+                        <label for="regUsername" class="form-label">Nombre de Usuario</label>
+                        <input type="text" class="form-control" id="regUsername" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="regEmail" class="form-label">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="regEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="regPassword" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="regPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="regConfirmPassword" class="form-label">Confirmar Contraseña</label>
+                        <input type="password" class="form-control" id="regConfirmPassword" required>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="regAcceptTerms" required>
+                        <label class="form-check-label" for="regAcceptTerms">Acepto los <a href="#">Términos y Condiciones</a> y la <a href="#">Política de Privacidad</a>.</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Crear Cuenta</button>
+                </form>
+                <p class="text-center my-3">O regístrate con:</p>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-danger"><i class="fab fa-google me-2"></i>Google</button>
+                    <button class="btn btn-primary"><i class="fab fa-facebook me-2"></i>Facebook</button>
+                    <button class="btn btn-dark"><i class="fab fa-apple me-2"></i>Apple</button>
+                </div>
+                <p class="text-center mt-3">¿Ya tienes cuenta? <a href="#" onclick="showPage('login-page')">Inicia Sesión</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- INICIO DE SESIÓN -->
+    <div id="login-page" class="container section">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center mb-4">Iniciar Sesión</h2>
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="loginEmail" class="form-label">Correo Electrónico o Nombre de Usuario</label>
+                        <input type="text" class="form-control" id="loginEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="loginPassword" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="loginPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <a href="#">¿Olvidaste tu contraseña?</a>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Iniciar Sesión</button>
+                </form>
+                <p class="text-center mt-3">¿No tienes cuenta? <a href="#" onclick="showPage('register-page')">Regístrate Gratis</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- III. ONBOARDING Y PERSONALIZACIÓN -->
+    <div id="onboarding-page" class="container section">
+        <h2 class="text-center mb-4">¡Bienvenido/a a RutaActiva, <span id="onboardingUsername">Usuario</span>!</h2>
+        <p class="text-center lead mb-5">Ayúdanos a conocerte mejor para ofrecerte las mejores experiencias.</p>
+
+        <form id="onboardingForm">
+            <!-- Nivel de Actividad Física -->
+            <div class="mb-4">
+                <h5>1. Nivel de Actividad Física:</h5>
+                <select class="form-select" id="activityLevel">
+                    <option selected>Selecciona una opción...</option>
+                    <option value="sedentary">Sedentario / Principiante (paseos ligeros)</option>
+                    <option value="occasional">Activo Ocasional (caminatas moderadas, algo de ejercicio)</option>
+                    <option value="regular">Activo Regular (ejercicio varias veces por semana, senderismo)</option>
+                    <option value="very_active">Muy Activo / Atleta (entrenamientos intensos, largas distancias)</option>
+                </select>
+            </div>
+
+            <!-- Intereses Turísticos -->
+            <div class="mb-4">
+                <h5>2. Intereses Turísticos: (Selección múltiple)</h5>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="history_culture" id="interestHistory">
+                    <label class="form-check-label" for="interestHistory">Historia y Cultura</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="nature_landscapes" id="interestNature">
+                    <label class="form-check-label" for="interestNature">Naturaleza y Paisajes</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="gastronomy" id="interestGastronomy">
+                    <label class="form-check-label" for="interestGastronomy">Gastronomía Local</label>
+                </div>
+                 <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="urban_art" id="interestUrbanArt">
+                    <label class="form-check-label" for="interestUrbanArt">Arte Urbano y Arquitectura</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="panoramic_views" id="interestViews">
+                    <label class="form-check-label" for="interestViews">Miradores y Vistas Panorámicas</label>
+                </div>
+                 <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="adventure" id="interestAdventure">
+                    <label class="form-check-label" for="interestAdventure">Aventura y Adrenalina</label>
+                </div>
+            </div>
+
+            <!-- Tipos de Actividad Preferidos -->
+            <div class="mb-4">
+                <h5>3. Tipos de Actividad Preferidos: (Selección múltiple)</h5>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="walking" id="activityWalking">
+                    <label class="form-check-label" for="activityWalking">Caminar / Pasear</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="running" id="activityRunning">
+                    <label class="form-check-label" for="activityRunning">Correr / Jogging</label>
+                </div>
+                 <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="hiking" id="activityHiking">
+                    <label class="form-check-label" for="activityHiking">Senderismo / Trekking</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="cycling" id="activityCycling">
+                    <label class="form-check-label" for="activityCycling">Ciclismo</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="urban_exploration" id="activityUrbanExploration">
+                    <label class="form-check-label" for="activityUrbanExploration">Exploración Urbana</label>
+                </div>
+            </div>
+
+             <!-- Disponibilidad de Tiempo Típica -->
+            <div class="mb-4">
+                <h5>4. Disponibilidad de Tiempo Típica para Actividades:</h5>
+                <select class="form-select" id="timeAvailability">
+                    <option selected>Selecciona una opción...</option>
+                    <option value="short">Cortas (menos de 1 hora)</option>
+                    <option value="medium">Medias (1-3 horas)</option>
+                    <option value="long">Largas (más de 3 horas / medio día)</option>
+                    <option value="full_day">Día completo</option>
+                </select>
+            </div>
+
+            <!-- ¿Con quién sueles realizar estas actividades? (Opcional) -->
+            <div class="mb-5">
+                <h5>5. ¿Con quién sueles realizar estas actividades? (Opcional)</h5>
+                <select class="form-select" id="activityCompanion">
+                    <option selected>Selecciona una opción...</option>
+                    <option value="solo">Solo/a</option>
+                    <option value="couple">En pareja</option>
+                    <option value="friends">Con amigos</option>
+                    <option value="family">Con familia (y niños)</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100">Guardar Preferencias y Empezar</button>
+        </form>
+    </div>
+
+    <!-- IV. ELECCIÓN DE ZONA Y DESCUBRIMIENTO DE RUTAS -->
+    <div id="explore-routes" class="container-fluid section">
+        <div class="container">
+            <h2 class="text-center mb-4">Explora Rutas</h2>
+            <!-- Barra de búsqueda -->
+            <div class="input-group mb-4">
+                <input type="text" class="form-control form-control-lg" placeholder="Buscar rutas, lugares, ciudades..." id="routeSearchInput">
+                <button class="btn btn-outline-secondary" type="button" id="searchButton"><i class="fas fa-search"></i></button>
+            </div>
+
+            <!-- Filtros principales -->
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <label for="filterEnvironment" class="form-label">Tipo de Entorno:</label>
+                    <select class="form-select" id="filterEnvironment">
+                        <option value="all" selected>Todos</option>
+                        <option value="city">Ciudad</option>
+                        <option value="mountain">Montaña</option>
+                        <option value="both">Ambos</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="filterActivityType" class="form-label">Tipo de Actividad:</label>
+                    <select class="form-select" id="filterActivityType">
+                        <option value="all" selected>Todas</option>
+                        <option value="caminar">Caminar</option>
+                        <option value="correr">Correr</option>
+                        <option value="bici">Bici</option>
+                        <option value="senderismo">Senderismo</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="filterDifficulty" class="form-label">Dificultad:</label>
+                    <select class="form-select" id="filterDifficulty">
+                        <option value="all" selected>Todas</option>
+                        <option value="easy">Fácil</option>
+                        <option value="moderate">Moderada</option>
+                        <option value="hard">Difícil</option>
+                        <option value="expert">Experto</option>
+                    </select>
+                </div>
+            </div>
+            <div class="text-center mb-4">
+                 <button class="btn btn-primary" id="applyFiltersButton">Aplicar Filtros</button>
+            </div>
+
+            <!-- Visualización de Rutas (Tarjetas) -->
+            <div id="routeList" class="row">
+                <!-- Las tarjetas de ruta se generan con JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA DE DETALLE DE RUTA -->
+    <div id="route-detail-page" class="container section">
+        <button class="btn btn-secondary mb-3" onclick="showPage('explore-routes')"><i class="fas fa-arrow-left me-1"></i> Volver a Rutas</button>
+        <h2 id="routeNameDetail">Nombre de la Ruta</h2>
+        <p id="routeLocationDetail" class="text-muted">Ubicación</p>
+
+        <div class="row">
+            <div class="col-md-8">
+                <!-- Galería de fotos y videos -->
+                <div id="routeCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <!-- Las imágenes del carrusel se generan con JavaScript -->
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#routeCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#routeCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
+                <!-- Mapa interactivo -->
+                <h4>Mapa del Recorrido</h4>
+                <div id="mapDetail" class="mb-4"></div>
+
+                <h4>Descripción Detallada</h4>
+                <p id="routeDescriptionDetail">Aquí va la descripción completa de la ruta...</p>
+
+                <h4>Puntos de Interés</h4>
+                <ul id="routePOIDetail" class="list-group mb-4">
+                    <!-- Los PDI se generan con JavaScript -->
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Estadísticas</h5>
+                        <ul class="list-unstyled">
+                            <li><strong>Distancia:</strong> <span id="routeDistanceDetail">X</span> km</li>
+                            <li><strong>Desnivel:</strong> <span id="routeElevationDetail">Y</span> m</li>
+                            <li><strong>Tiempo Estimado:</strong> <span id="routeTimeDetail">Z</span> horas</li>
+                            <li><strong>Calorías Aprox.:</strong> <span id="routeCaloriesDetail">W</span> kcal</li>
+                            <li><strong>Dificultad:</strong> <span id="routeDifficultyDetail" class="badge bg-info">Moderada</span></li>
+                        </ul>
+                        <hr>
+                        <h5>Recomendaciones</h5>
+                        <p id="routeRecommendationsDetail">Llevar agua, calzado cómodo, protector solar.</p>
+                        <hr>
+                        <h5>Cómo llegar al inicio</h5>
+                        <p id="routeStartAccessDetail">Tomar autobús L2 hasta parada "Inicio Sendero".</p>
+                        <hr>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-success"><i class="fas fa-check-circle me-1"></i> Marcar como Realizada</button>
+                            <button class="btn btn-warning"><i class="fas fa-heart me-1"></i> Añadir a Favoritas</button>
+                            <button class="btn btn-info"><i class="fas fa-play-circle me-1"></i> Iniciar Seguimiento (App)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Comentarios y Valoraciones -->
+        <div class="mt-5">
+            <h4>Comentarios y Valoraciones (<span id="routeRatingCount">0</span>) <span class="text-warning ms-2" id="routeOverallRatingStars"><i class="far fa-star"></i> 0.0</span></h4>
+            <div id="routeCommentsContainer">
+                <!-- Ejemplo de comentario (esto se generaría dinámicamente o vendría del backend) -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <strong>Juan Pérez:</strong> <span class="text-warning"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></span>
+                        <p>Una ruta fantástica, un poco dura la subida final pero merece la pena. ¡Las vistas son espectaculares!</p>
+                        <small class="text-muted">Hace 2 días</small>
+                    </div>
+                </div>
+            </div>
+            <form id="commentForm">
+                <h5>Deja tu comentario:</h5>
+                <div class="mb-2">
+                     <label for="commentRating">Tu valoración:</label>
+                    <select id="commentRating" class="form-select form-select-sm w-auto d-inline-block">
+                        <option value="5">★★★★★</option>
+                        <option value="4">★★★★☆</option>
+                        <option value="3">★★★☆☆</option>
+                        <option value="2">★★☆☆☆</option>
+                        <option value="1">★☆☆☆☆</option>
+                    </select>
+                </div>
+                <textarea class="form-control mb-2" id="commentText" rows="3" placeholder="Escribe tu experiencia..." required></textarea>
+                <button type="submit" class="btn btn-primary">Publicar Comentario</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- V. PERFIL DE USUARIO -->
+    <div id="user-profile" class="container section">
+        <div class="profile-header text-center mb-5">
+            <img src="https://via.placeholder.com/150.png?text=User" alt="Foto de perfil" class="mb-3" id="profileUserImage">
+            <h2 id="profileUsernameDisplay">NombreDeUsuario</h2>
+            <p class="text-muted" id="profileUserBio">"Amante de la naturaleza y las aventuras urbanas."</p>
+            <p><i class="fas fa-map-marker-alt me-1"></i> <span id="profileUserCity">Ciudad de Residencia</span></p>
+            <button class="btn btn-outline-secondary btn-sm" onclick="showPage('profile-settings')">Editar Perfil</button>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Estadísticas de Actividad</h4>
+                <ul class="list-group mb-4">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Rutas de Ciudad Exploradas
+                        <span class="badge bg-primary rounded-pill" id="profileCityRoutes">0</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Rutas de Montaña Exploradas
+                        <span class="badge bg-success rounded-pill" id="profileMountainRoutes">0</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Calorías Quemadas Totales
+                        <span class="badge bg-danger rounded-pill" id="profileTotalCalories">0 kcal</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Pasos Realizados Totales
+                        <span class="badge bg-warning text-dark rounded-pill" id="profileTotalSteps">0</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Distancia Total Recorrida
+                        <span class="badge bg-info rounded-pill" id="profileTotalDistance">0 km</span>
+                    </li>
+                </ul>
+                <!-- Gráficos de progreso -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Progreso Semanal (Calorías)</h5>
+                        <canvas id="caloriesChart" height="150"></canvas>
+                         <p class="text-center text-muted small">Gráfico de ejemplo, requiere integración.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h4>Mis Logros / Badges</h4>
+                <div class="row text-center mb-4" id="profileAchievementsContainer">
+                    <!-- Los logros se generan con JavaScript -->
+                    <div class="col-4">
+                        <i class="fas fa-shoe-prints achievement-icon" title="Explorador Novato"></i>
+                        <p class="small">Explorador Novato</p>
+                    </div>
+                </div>
+
+                <h4>Mis Rutas Favoritas</h4>
+                <ul class="list-group mb-4" id="profileFavoriteRoutes">
+                    <!-- Las rutas favoritas se generan con JavaScript -->
+                </ul>
+
+                <h4>Mis Contribuciones</h4>
+                <p>Has subido <strong id="profilePhotoCount">0 fotos</strong> y realizado <strong id="profileCommentCount">0 comentarios</strong>.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONFIGURACIÓN DE CUENTA -->
+    <div id="profile-settings" class="container section">
+        <h2 class="mb-4">Configuración de la Cuenta</h2>
+        <button class="btn btn-secondary mb-3" onclick="showPage('user-profile')"><i class="fas fa-arrow-left me-1"></i> Volver al Perfil</button>
+        <form id="profileSettingsForm">
+            <div class="mb-3">
+                <label for="settingsUsername" class="form-label">Nombre de Usuario</label>
+                <input type="text" class="form-control" id="settingsUsername">
+            </div>
+            <div class="mb-3">
+                <label for="settingsBio" class="form-label">Biografía</label>
+                <textarea class="form-control" id="settingsBio" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="settingsCity" class="form-label">Ciudad de Residencia</label>
+                <input type="text" class="form-control" id="settingsCity">
+            </div>
+             <div class="mb-3">
+                <label for="settingsProfilePic" class="form-label">Foto de Perfil</label>
+                <input class="form-control" type="file" id="settingsProfilePic">
+            </div>
+            <hr>
+            <h5>Cambiar Contraseña</h5>
+            <div class="mb-3">
+                <label for="settingsOldPassword" class="form-label">Contraseña Actual</label>
+                <input type="password" class="form-control" id="settingsOldPassword">
+            </div>
+            <div class="mb-3">
+                <label for="settingsNewPassword" class="form-label">Nueva Contraseña</label>
+                <input type="password" class="form-control" id="settingsNewPassword">
+            </div>
+            <div class="mb-3">
+                <label for="settingsConfirmNewPassword" class="form-label">Confirmar Nueva Contraseña</label>
+                <input type="password" class="form-control" id="settingsConfirmNewPassword">
+            </div>
+            <hr>
+            <h5>Notificaciones</h5>
+             <div class="form-check form-switch mb-2">
+                <input class="form-check-input" type="checkbox" role="switch" id="notifNewRoutes" checked>
+                <label class="form-check-label" for="notifNewRoutes">Nuevas rutas en mi zona</label>
+            </div>
+            <div class="form-check form-switch mb-2">
+                <input class="form-check-input" type="checkbox" role="switch" id="notifComments" checked>
+                <label class="form-check-label" for="notifComments">Comentarios en mis aportaciones</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </form>
+    </div>
+
+    <!-- VI. APARTADO DE TAREAS Y PUNTOS (GAMIFICACIÓN) -->
+    <div id="challenges-rewards" class="container section">
+        <h2 class="text-center mb-4">Desafíos Activos y Recompensas</h2>
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <h4>Mis Puntos: <span id="userPoints" class="badge bg-success">0</span></h4>
+            </div>
+            <div class="col-md-6 text-md-end">
+                 <h4>Nivel: <span id="userLevel" class="badge bg-info">Principiante</span></h4>
+            </div>
+        </div>
+        <div class="progress mb-4" style="height: 20px;">
+            <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="userPointsProgressBar">0 / 100 pts para Bronce</div>
+        </div>
+
+        <h4>Listado de Desafíos</h4>
+        <div class="list-group" id="challengesListContainer">
+            <!-- Los desafíos se generan con JavaScript -->
+        </div>
+
+        <h4 class="mt-5">Tienda de Recompensas (Próximamente)</h4>
+        <p class="text-muted">Canjea tus puntos por descuentos, material exclusivo y más.</p>
+    </div>
+
+    <!-- VII. APARTADO DE FOTOS Y COMUNIDAD -->
+    <div id="community-feed" class="container section">
+        <h2 class="text-center mb-4">Comunidad Activa: Exploradores en Acción</h2>
+
+        <div class="text-end mb-3">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal"><i class="fas fa-plus-circle me-1"></i> Subir Foto/Video</button>
+        </div>
+
+        <!-- Filtros del Feed -->
+        <div class="btn-group mb-4" role="group" aria-label="Filtros del feed">
+            <input type="radio" class="btn-check" name="feedFilter" id="filterRecent" autocomplete="off" checked>
+            <label class="btn btn-outline-secondary" for="filterRecent">Más Recientes</label>
+
+            <input type="radio" class="btn-check" name="feedFilter" id="filterPopular" autocomplete="off">
+            <label class="btn btn-outline-secondary" for="filterPopular">Más Populares</label>
+
+            <input type="radio" class="btn-check" name="feedFilter" id="filterCityFeed" autocomplete="off">
+            <label class="btn btn-outline-secondary" for="filterCityFeed">Ciudad</label>
+
+            <input type="radio" class="btn-check" name="feedFilter" id="filterMountainFeed" autocomplete="off">
+            <label class="btn btn-outline-secondary" for="filterMountainFeed">Montaña</label>
+        </div>
+
+        <!-- Feed Principal -->
+        <div class="row" id="communityPostsContainer">
+            <!-- Los posts de la comunidad se generan con JavaScript -->
+        </div>
+    </div>
+
+    <!-- Modal para subir Foto/Video -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadModalLabel">Subir Foto o Video</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="uploadForm">
+                        <div class="mb-3">
+                            <label for="uploadFile" class="form-label">Seleccionar archivo</label>
+                            <input class="form-control" type="file" id="uploadFile" accept="image/*,video/*" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="uploadDescription" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="uploadDescription" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="uploadRouteTag" class="form-label">Etiquetar Ruta (opcional)</label>
+                            <select class="form-select" id="uploadRouteTag">
+                                <option value="">Selecciona una ruta...</option>
+                                <!-- Opciones de ruta se llenarán con JS -->
+                            </select>
+                        </div><div class="mb-3">
+                            <label for="uploadLocation" class="form-label">Añadir Ubicación (opcional)</label>
+                            <input type="text" class="form-control" id="uploadLocation" placeholder="Ej: Parque del Retiro, Madrid">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="publishUploadButton">Publicar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-white text-center py-4 mt-auto">
+        <div class="container">
+            <p class="mb-1">© <span id="currentYear"></span> RutasVitales. Todos los derechos reservados.</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#" class="text-white">Sobre Nosotros</a></li>
+                <li class="list-inline-item"><a href="#" class="text-white">Contacto</a></li>
+                <li class="list-inline-item"><a href="#" class="text-white">Términos y Condiciones</a></li>
+                <li class="list-inline-item"><a href="#" class="text-white">Política de Privacidad</a></li>
+            </ul>
+            <div>
+                <a href="#" class="text-white me-2"><i class="fab fa-facebook-f fa-lg"></i></a>
+                <a href="#" class="text-white me-2"><i class="fab fa-twitter fa-lg"></i></a>
+                <a href="#" class="text-white me-2"><i class="fab fa-instagram fa-lg"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle (Popper.js included) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <!-- Leaflet JS (para mapas) -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <!-- Chart.js (para gráficos, opcional) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="Rutas.js"></script>
+</body>
+</html>
